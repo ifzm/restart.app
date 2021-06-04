@@ -36,7 +36,12 @@ function kill(name) {
                 const processMessage = line.trim().split(/\s+/)
                 const processName = processMessage[0]
                 if (processName === name) {
-                    process.kill(processMessage[1])
+                    try {
+                        process.kill(processMessage[1])
+                        logger.debug('kill %s success.', processName)
+                    } catch (e) {
+                        logger.error('kill fail: %s', e)
+                    }
                 }
             })
 
@@ -55,7 +60,7 @@ function format(bytes) {
 }
 
 // 读取命令行传入的参数
-const [file = 'D:\\Applications\\YRMediaServer\\YRMediaServer.exe', cron = '0 0 0 * * *'] = process.argv.splice(2)
+const [file = 'notepad.exe', cron = '0 0 0 * * *'] = process.argv.splice(2)
 
 // 主程序
 async function main() {
