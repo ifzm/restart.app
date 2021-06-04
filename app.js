@@ -38,9 +38,9 @@ function kill(name) {
                 if (processName === name) {
                     try {
                         process.kill(processMessage[1])
-                        logger.debug('kill %s success.', processName)
+                        logger.info('Kill `%s` success', processName)
                     } catch (e) {
-                        logger.error('kill fail: %s', e)
+                        logger.error('Kill `%s` fail: %s', e)
                     }
                 }
             })
@@ -81,7 +81,6 @@ async function main() {
 
     // kill
     await kill(path.basename(file))
-    logger.info('Kill: %s', path.basename(file))
 
     // run
     child.exec(`cd ${path.dirname(file)} && start ${path.basename(file)}`)
@@ -114,6 +113,6 @@ process.on('SIGINT', async () => {
     }
 
     await kill(path.basename(file))
-    logger.warn('Exit Kill: %s', path.basename(file))
+    logger.warn('Exit Kill Proccess')
     process.exit(0)
 })
